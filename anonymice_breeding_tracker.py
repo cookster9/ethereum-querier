@@ -3,6 +3,7 @@ import time
 import datetime
 import pandas as pd
 import csv
+import numpy as np
 
 now = int( time.time() )
 BREEDING_CONTRACT_ADDRESS = "0x15Cc16BfE6fAC624247490AA29B6D632Be549F00"
@@ -22,7 +23,16 @@ FIRST_BREEDING_BLOCK=13424115
 CURRENT_BLOCK=eth.get_block_number_by_timestamp(timestamp=now,closest="before")
 print("Current block: "+CURRENT_BLOCK)
 count=0
-transactionList=eth.get_normal_txs_by_address(address=BREEDING_CONTRACT_ADDRESS, startblock=FIRST_BREEDING_BLOCK, endblock=CURRENT_BLOCK, sort="")
+#transactionList=eth.get_erc20_token_transfer_events_by_address(address=BREEDING_CONTRACT_ADDRESS, startblock=FIRST_BREEDING_BLOCK, endblock=CURRENT_BLOCK, sort="")
+#transactionList=[]
+
+#just divide in 2? from first breeding block to current?
+
+MIDDLE_BLOCK = (int(FIRST_BREEDING_BLOCK)+int(CURRENT_BLOCK))//2
+
+transactionList1=eth.get_normal_txs_by_address(address=BREEDING_CONTRACT_ADDRESS, startblock=FIRST_BREEDING_BLOCK, endblock=MIDDLE_BLOCK, sort="")
+transactionList2=eth.get_normal_txs_by_address(address=BREEDING_CONTRACT_ADDRESS, startblock=MIDDLE_BLOCK+1, endblock=CURRENT_BLOCK, sort="")
+transactionList=np.append(transactionList1,transactionList2)
 #print(eth.get_normal_txs_by_address(address=BREEDING_CONTRACT_ADDRESS, startblock=13773630, endblock=13774615, sort=""))
 
 
@@ -36,6 +46,7 @@ current_count=0
 tx_count=0
 last_date=''
 last_tx={}
+
 for tx in transactionList:
     #print(tx["input"][0:10])
     tx_count=tx_count+1
