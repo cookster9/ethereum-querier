@@ -4,12 +4,12 @@ import datetime
 import pandas as pd
 import csv
 import numpy as np
+import creds
 
 now = int( time.time() )
-BREEDING_CONTRACT_ADDRESS = "0x15Cc16BfE6fAC624247490AA29B6D632Be549F00"
-API_KEY = "creds.API_KEY"
-
-METAMASK_ADDRESS = "creds.METAMASK_ADDRESS"
+BREEDING_CONTRACT_ADDRESS = creds.BREEDING_CONTRACT_ADDRESS
+API_KEY = creds.API_KEY
+METAMASK_ADDRESS = creds.METAMASK_ADDRESS
 
 eth = Etherscan(API_KEY) # key in quotation marks
 

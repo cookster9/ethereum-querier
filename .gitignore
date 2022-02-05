@@ -144,3 +144,6 @@ cython_debug/
 
 #new
 *.lnk
+
+#passwords/apis
+creds.py
